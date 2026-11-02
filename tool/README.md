@@ -8,6 +8,8 @@ Command-line diagnostics for the Aries PT5161L retimer on the EQUINOX-REVC card,
 
 You need `gcc`, `make` and the Linux kernel headers. `libi2c` and OpenBMC are not needed.
 
+The build expects `sources/` next to `tool/`. If the SDK is elsewhere, use `make SDK=/path/to/meta-openbmc-retimer-v2.16.2/files`.
+
 ```
 make
 make test
