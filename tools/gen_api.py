@@ -7,6 +7,11 @@ doc=re.compile(r'/\*\*(.*?)\*/\s*\n((?:[A-Za-z_][^;{/]*?)\([^;{]*?\))\s*\{',re.S
 def clean(c):
     return [re.sub(r'^\s*\* ?','',l).rstrip() for l in c.split('\n')]
 o=[open(sys.argv[3]).read().rstrip(),'']
+notes={}
+for b in open(sys.argv[4]).read().split('\n# ')[0:]:
+    ls=b.lstrip('# ').strip().split('\n')
+    notes[ls[0]]=ls[1:]
+used=set()
 total=0;miss=[]
 for m,t in mods:
     h=open(f'{src}/{m}.h',errors='replace').read()
@@ -36,6 +41,19 @@ for m,t in mods:
     protos=set(re.findall(r'^(?:AriesErrorType|int|float|void|const char\*|uint8_t)\s+([a-z]\w+)\(',h,re.M))
     u=sorted(protos-seen); miss+= [(m,x) for x in u]
     if u:
-        o+=['### Declared without a doc comment','']+[f'- `{x}`' for x in u]+['']
+        o+=['### Functions without SDK comments','','These descriptions were written from the source code and are not Astera\'s.','']
+        hc=re.sub(r'/\*.*?\*/','',h,flags=re.S)
+        for x in u:
+            sig=re.search(r'^[A-Za-z][\w \t\n*]*?\b'+x+r'\s*\([^;]*\)',hc,re.M).group(0)
+            sig=re.sub(r'\s+',' ',sig).strip()
+            sp=[re.findall(r'(\w+)$',q.strip())[0] for q in sig[sig.index('(')+1:-1].split(',')]
+            n=notes[x];used.add(x)
+            np=[re.match(r'- (\w+): (.*)',l) for l in n if l.startswith('- ')]
+            if [m.group(1) for m in np]!=sp: sys.exit(f'params differ for {x}: {sp}')
+            r=[l[9:] for l in n if l.startswith('Returns: ')]
+            o+=[f'#### `{x}`','','```c',sig+';','```','',n[0],'']
+            o+=[f'- `{m.group(1)}`: {m.group(2)}' for m in np]+['']
+            if r: o+=[f'Returns: {r[0]}','']
 open(out,'w').write('\n'.join(o)+'\n')
+if set(notes)!=used: sys.exit(f'unused notes: {set(notes)-used}')
 print('documented',total);print('undocumented',len(miss));print(miss)
