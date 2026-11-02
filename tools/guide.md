@@ -2,8 +2,9 @@
 
 Unofficial reference for the Aries PT5161L retimer used on the Astera Labs EQUINOX-REVC card.
 Generated from the Apache-2.0 Astera Labs SDK source published in Meta's OpenBMC repository
-(`common/recipes-lib/retimer-v2.16.2`, commit `739d9be`). Function descriptions are the SDK
-authors' own comments. This is not an Astera document and was not tested on hardware.
+(`common/recipes-lib/retimer-v2.16.2`, commit `739d9be`). Most function descriptions are the
+SDK authors' own comments. Sections titled "Functions without SDK comments" were written from
+the source code. This is not an Astera document and was not tested on hardware.
 
 Not covered, because it is not public: the Equinox User's Guide, the PT5161L datasheet, the
 debug header pinout, the Python SDK, and firmware images.
