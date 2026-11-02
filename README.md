@@ -17,7 +17,6 @@ Unofficial notes and public source code for working with the Aries PT5161L retim
 | `tool/` | `equinox_diag` command-line tool, tested only against a simulated chip |
 | `sources/meta-openbmc-retimer-v2.16.2/` | Astera's C SDK, from Meta's OpenBMC repo |
 | `sources/kernel/pt5161l.c` | Linux driver, a short example of the I2C protocol |
-| `sources/brief/` | Astera's product brief, if included |
 
 ## Not included
 
@@ -31,4 +30,4 @@ The guide and Python SDK are available by request from info@AsteraLabs.com. The 
 
 ## Licenses
 
-The SDK source files are Apache-2.0, as stated in their headers and `LICENSE`. Meta's build recipe lists GPL-2.0-or-later. The kernel driver is GPL-2.0-or-later. The product brief belongs to Astera Labs.
+The SDK source files are Apache-2.0, as stated in their headers and `LICENSE`. Meta's build recipe lists GPL-2.0-or-later. The kernel driver is GPL-2.0-or-later.
